@@ -4,8 +4,7 @@
 
 **车牌颜色和车牌识别一起训练看这里： [车牌识别+车牌颜色](https://github.com/we0091234/crnn_plate_recognition/tree/plate_color)**
 
-
-训练的时候 选择相应的cfg 即可选择模型的大小
+训练的时候 选择相应的 cfg 即可选择模型的大小
 
 train.py
 
@@ -27,19 +26,23 @@ train.py
 
 ## 数据
 
-#### 车牌识别数据集CCPD+CRPD
+#### 车牌识别数据集 CCPD+CRPD
 
-1. 从CCPD和CRPD截下来的车牌小图以及我自己收集的一部分车牌 有需要的话加vx:we0091234 **收费30 介意勿扰** 
-2. 数据集打上标签,生成train.txt和val.txt
+1. 从 CCPD 和 CRPD 截下来的车牌小图以及我自己收集的一部分车牌 有需要的话加 vx:we0091234 **收费 30 介意勿扰**
+2. 数据集打上标签,生成 train.txt 和 val.txt
 
    ![Image text](images/tmp2E.png)
 
-   图片命名如上图：**车牌号_序号.jpg**
-   然后执行如下命令，得到train.txt和val.txt
+   图片命名如上图：**车牌号\_序号.jpg**
+   然后执行如下命令，得到 train.txt 和 val.txt
 
    ```
    python plateLabel.py --image_path your/train/img/path/ --label_file datasets/train.txt
    python plateLabel.py --image_path your/val/img/path/ --label_file datasets/val.txt
+
+   python3 plateLabel.py --image_path /home/htcbot/htcbot_ai_server/dataset/htc_plates/train/ --label_file datasets/train.txt
+   python3 plateLabel.py --image_path /home/htcbot/htcbot_ai_server/dataset/htc_plates/val/ --label_file datasets/val.txt
+
    ```
 
    数据格式如下：
@@ -47,15 +50,16 @@ train.py
    train.txt
 
    ```
-   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_ALL/冀BAJ731_3.jpg 5 53 52 60 49 45 43 
-   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_ALL/冀BD387U_2454.jpg 5 53 55 45 50 49 70 
-   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_ALL/冀BG150C_3.jpg 5 53 58 43 47 42 54 
-   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_OTHER_ALL/皖A656V3_8090.jpg 13 52 48 47 48 71 45 
-   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_OTHER_ALL/皖C91546_7979.jpg 13 54 51 43 47 46 48 
-   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_OTHER_ALL/皖G88950_1540.jpg 13 58 50 50 51 47 42 
-   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_OTHER_ALL/皖GX9Y56_2113.jpg 13 58 73 51 74 47 48 
+   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_ALL/冀BAJ731_3.jpg 5 53 52 60 49 45 43
+   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_ALL/冀BD387U_2454.jpg 5 53 55 45 50 49 70
+   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_ALL/冀BG150C_3.jpg 5 53 58 43 47 42 54
+   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_OTHER_ALL/皖A656V3_8090.jpg 13 52 48 47 48 71 45
+   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_OTHER_ALL/皖C91546_7979.jpg 13 54 51 43 47 46 48
+   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_OTHER_ALL/皖G88950_1540.jpg 13 58 50 50 51 47 42
+   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_OTHER_ALL/皖GX9Y56_2113.jpg 13 58 73 51 74 47 48
    ```
-3. 将train.txt  val.txt路径写入lib/config/360CC_config.yaml 中
+
+3. 将 train.txt val.txt 路径写入 lib/config/360CC_config.yaml 中
 
    ```
    DATASET:
@@ -71,9 +75,9 @@ train.py
 python train.py --cfg lib/config/360CC_config.yaml
 ```
 
-结果保存再output文件夹中
+结果保存再 output 文件夹中
 
-## 测试demo
+## 测试 demo
 
 ```
 
@@ -87,14 +91,13 @@ python demo.py --model_path saved_model/best.pth --image_path images/test.jpg
 
 ![Image text](images/result.jpg)
 
-## 导出onnx
+## 导出 onnx
 
 ```
 
 python export.py --weights saved_model/best.pth --save_path saved_model/best.onnx  --simplify
 
 ```
-
 
 #### onnx 推理
 
@@ -135,12 +138,12 @@ cv::Mat get_split_merge(cv::Mat &img)   //双层车牌 分割 拼接
 }
 ```
 
-![Image text](image/tmp55DE.png)  通过变换得到 ![Image text](image/new.jpg)
+![Image text](image/tmp55DE.png) 通过变换得到 ![Image text](image/new.jpg)
 
 ## 训练自己的数据集
 
-1. 修改alphabets.py，修改成你自己的字符集，plateName,plate_chr都要修改，plate_chr 多了一个空的占位符'#'
-2. 通过plateLabel.py 生成train.txt, val.txt
+1. 修改 alphabets.py，修改成你自己的字符集，plateName,plate_chr 都要修改，plate_chr 多了一个空的占位符'#'
+2. 通过 plateLabel.py 生成 train.txt, val.txt
 3. 训练
 
 ## 数据增强
@@ -151,7 +154,7 @@ cd Text-Image-Augmentation-python-master
 python demo1.py --src_path /mnt/Gu/trainData/test_aug --dst_path /mnt/Gu/trainData/result_aug/
 ```
 
-src_path 是数据路径， dst_path是保存的数据路径
+src_path 是数据路径， dst_path 是保存的数据路径
 
 **然后把两份数据放到一起进行训练，效果会好很多！**
 
@@ -162,4 +165,4 @@ src_path 是数据路径， dst_path是保存的数据路径
 
 #### 联系
 
-**有问题可以提issues 或者加qq群:769809695 询问**
+**有问题可以提 issues 或者加 qq 群:769809695 询问**

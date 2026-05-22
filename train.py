@@ -19,14 +19,14 @@ from tensorboardX import SummaryWriter
 def parse_arg():
     parser = argparse.ArgumentParser(description="train crnn")
     
-    parser.add_argument('--cfg', help='experiment configuration filename', required=True, type=str)
+    parser.add_argument('--cfg', help='experiment configuration filename', type=str, default="lib/config/htc.yaml")
     parser.add_argument('--img_h', type=int, default=48, help='height') 
     parser.add_argument('--img_w',type=int,default=168,help='width')
     args = parser.parse_args()
    
     with open(args.cfg, 'r') as f:
-        # config = yaml.load(f, Loader=yaml.FullLoader)
-        config = yaml.load(f)
+        config = yaml.load(f, Loader=yaml.FullLoader)
+        # config = yaml.load(f)
         config = edict(config)
 
     config.DATASET.ALPHABETS = plateName

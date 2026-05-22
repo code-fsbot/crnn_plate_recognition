@@ -39,11 +39,15 @@ class _360CC(data.Dataset):
         with open(txt_file, 'r', encoding='utf-8') as file:
             contents = file.readlines()
             for c in contents:
-                c=c.strip(" \n")
-                imgname = c.split(' ')[0]
-                indices = c.split(' ')[1:]
+                c = c.strip()
+                if not c:
+                    continue
+                parts = c.split(' ')
+                imgname = parts[0]
+                indices = [idx for idx in parts[1:] if idx.strip() != '']  # ✅过滤空字符串
                 string = ''.join([char_dict[int(idx)] for idx in indices])
                 self.labels.append({imgname: string})
+
 
         print("load {} images!".format(self.__len__()))
 

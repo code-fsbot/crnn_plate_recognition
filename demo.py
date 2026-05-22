@@ -71,9 +71,9 @@ def init_model(device,model_path):
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_path', type=str, default='saved_model/best.pth', help='model.pt path(s)')  
+    parser.add_argument('--model_path', type=str, default='/Users/fusheng/htcbot_ai_server/weights/plate_rec/best_65k_08070547_0.9707.pth', help='model.pt path(s)')  
     # parser.add_argument('--image_path', type=str, default='images/tmp6FC6.png', help='source') 
-    parser.add_argument('--image_path', type=str, default='/mnt/EPan/carPlate/@realTest2_noTraining/realrealTest', help='source') 
+    parser.add_argument('--image_path', type=str, default='/Users/fusheng/htcbot_ai_server/dataset/htc_plates/val', help='source') 
     # parser.add_argument('--image_path', type=str, default='/mnt/Gu/trainData/plate/new_git_train/val_verify', help='source') 
     parser.add_argument('--img_h', type=int, default=48, help='height') 
     parser.add_argument('--img_w',type=int,default=168,help='width')
